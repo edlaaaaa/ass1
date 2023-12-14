@@ -16,10 +16,10 @@ const initializeDBandServer = async () => {
       driver: sqlite3.Database,
     });
     app.listen(3000, () => {
-      console.log("Server is running on http://localhost:3000/");
+      console.log(`Server is running on http://localhost:3000/`);
     });
   } catch (error) {
-    console.log(DataBase error is ${error.message});
+    console.log(`DataBase error is ${error.message}`);
     process.exit(1);
   }
 };
