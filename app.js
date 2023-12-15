@@ -113,7 +113,7 @@ app.get("/todos/", async (request, response) => {
           status === "IN PROGRESS" ||
           status === "DONE"
         ) {
-          getTodosQuery = select * from todo where category='${category}' and status='${status}';;
+          getTodosQuery =`select * from todo where category='${category}' and status='${status}';`;
           data = await database.all(getTodosQuery);
           response.send(data.map((eachItem) => outPutResult(eachItem)));
         } else {
@@ -139,7 +139,7 @@ app.get("/todos/", async (request, response) => {
           priority === "MEDIUM" ||
           priority === "LOW"
         ) {
-          getTodosQuery = select * from todo where category='${category}' and priority='${priority}';;
+          getTodosQuery =`select * from todo where category='${category}' and priority='${priority}';`;
           data = await database.all(getTodosQuery);
           response.send(data.map((eachItem) => outPutResult(eachItem)));
         } else {
@@ -190,7 +190,7 @@ app.get("/todos/", async (request, response) => {
         category === "HOME" ||
         category === "LEARNING"
       ) {
-        getTodosQuery = select * from todo where category='${category}';;
+        getTodosQuery = `select * from todo where category='${category}';`;
         data = await database.all(getTodosQuery);
         response.send(data.map((eachItem) => outPutResult(eachItem)));
       } else {
