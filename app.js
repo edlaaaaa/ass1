@@ -169,7 +169,7 @@ app.get("/todos/", async (request, response) => {
     
     case hasStatusProperty(request.query):
       if (status === "TO DO" || status === "IN PROGRESS" || status === "DONE") {
-        getTodosQuery = SELECT * FROM todo WHERE status = '${status}';;
+        getTodosQuery = `SELECT * FROM todo WHERE status = '${status}';`;
         data = await database.all(getTodosQuery);
         response.send(data.map((eachItem) => outPutResult(eachItem)));
       } else {
@@ -179,7 +179,7 @@ app.get("/todos/", async (request, response) => {
       break;
     
     case hasSearchProperty(request.query):
-      getTodosQuery = select * from todo where todo like '%${search_q}%';;
+      getTodosQuery = `select * from todo where todo like '%${search_q}%';`;
       data = await database.all(getTodosQuery);
       response.send(data.map((eachItem) => outPutResult(eachItem)));
       break;
@@ -201,7 +201,7 @@ app.get("/todos/", async (request, response) => {
 
     
     default:
-      getTodosQuery = select * from todo;;
+      getTodosQuery = `select * from todo;`;
       data = await database.all(getTodosQuery);
       response.send(data.map((eachItem) => outPutResult(eachItem)));
   }
@@ -210,7 +210,7 @@ app.get("/todos/", async (request, response) => {
 
 app.get("/todos/:todoId/", async (request, response) => {
   const { todoId } = request.params;
-  const getToDoQuery = select * from todo where id=${todoId};;
+  const getToDoQuery = `select * from todo where id='${todoId}';`;
   const responseResult = await database.get(getToDoQuery);
   response.send(outPutResult(responseResult));
 });
@@ -222,7 +222,7 @@ app.get("/agenda/", async (request, response) => {
   if (isMatch(date, "yyyy-MM-dd")) {
     const newDate = format(new Date(date), "yyyy-MM-dd");
     console.log(newDate);
-    const requestQuery = select * from todo where due_date='${newDate}';;
+    const requestQuery = `select * from todo where due_date='${newDate}';`;
     const responseResult = await database.all(requestQuery);
     
     response.send(responseResult.map((eachItem) => outPutResult(eachItem)));
@@ -276,7 +276,7 @@ app.put("/todos/:todoId/", async (request, response) => {
   let updateColumn = "";
   const requestBody = request.body;
   console.log(requestBody);
-  const previousTodoQuery = SELECT * FROM todo WHERE id = ${todoId};;
+  const previousTodoQuery = `SELECT * FROM todo WHERE id = '${todoId}';`;
   const previousTodo = await database.get(previousTodoQuery);
   const {
     todo = previousTodo.todo,
@@ -296,7 +296,7 @@ app.put("/todos/:todoId/", async (request, response) => {
      due_date='${dueDate}' WHERE id = ${todoId};`;
 
         await database.run(updateTodoQuery);
-        response.send(Status Updated);
+        response.send("Status Updated");
       } else {
         response.status(400);
         response.send("Invalid Todo Status");
